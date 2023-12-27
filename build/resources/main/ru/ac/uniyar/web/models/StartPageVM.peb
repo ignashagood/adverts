@@ -1,0 +1,19 @@
+{% extends "./layout.peb" %}
+{% block title %}
+Beginning Page
+{% endblock %}
+{% block header %}{% endblock %}
+{% block  content%}
+     <div class="grid-y grid-margin-x grid-y">
+        <div class="cell small-3 text-center"><h1>Лабораторная работа номер 1</h1></div>
+        <div class="cell small-3 text-center"><h2>Разработка Web приложений</h2></div>
+        <div class="callout secondary large text-center">
+            <h4>Выполние студент ИТ-31 - Корюшкин Никита</h4>
+            <h4>Задача - Поиск специалиста</h4>
+            <h4>Количество специалистов: {{ model.specialistsAmount }}</h4>
+            <h4>Среднее количество объявлений на специалиста: {{ model.avgAdverts }}</h4>
+            <a href="/adverts">Перейти к лабораторной работе</a>
+            <br><img src="/img/diagram.png">
+        </div>
+     </div>
+{% endblock %}

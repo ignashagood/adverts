@@ -1,0 +1,36 @@
+{% extends "./layout.peb" %}
+{% block title %}
+Страничка заявки
+{% endblock %}
+{% block  content%}
+<div class="grid-container grid-padding-x"><br>
+    <div class="callout large text-center ">
+        <h3><b>Услуга</b>:<br> <b>{{ model.serviceName }}</b></h3>
+        <h4><b>Имя пользователя</b>:<br> <b>{{ model.userName }}</b></h4>
+        <h4><b>Контактные данные</b>:<br> {{ model.application.contacts }}</h4><br>
+        <h4><b>Образование</b>:<br> {{ model.application.education }}</h4><br>
+        <h4><b>Сертификаты</b>:<br> {{ model.application.certificates }}</h4><br>
+        <h4><b>Опыт работы</b>:<br> {{ model.application.workingExperience }}</h4><br>
+        <h4><b>Статус</b>:<br> {{ model.application.status }}</h4><br>
+        {% if model.application.comment != "NO COMMENTS"%}
+            <h4><b>Причина отказа</b>:<br> {{ model.application.comment }}</h4><br>
+        {% endif %}
+        <div>
+{#            <a class="button" href="/specialists/{{ model.advert.specialistId }}">Перейти к специалисту</a>#}
+            <a href="/applications" class="button">Вернуться к списку заявок</a>
+        </div>
+        {% if model.application.status == "Новая" %}
+            {% if permissions.agreement %}
+                <form method="POST">
+                    <select name="decision">
+                        <option disabled>Решение по заявке</option>
+                        <option value="1">Принять заявку</option>
+                        <option value="2">Отклонить заявку</option>
+                    </select>
+                    <input class="button" type="submit" value="Вынести приговор">
+                </form>
+            {% endif %}
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

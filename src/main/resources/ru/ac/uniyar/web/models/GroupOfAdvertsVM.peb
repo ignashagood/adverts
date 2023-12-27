@@ -1,0 +1,69 @@
+{% extends "./layout.peb" %}
+{% import "./Paginator.peb" %}
+
+{% block title %}
+Список объявлений
+{% endblock %}
+{% block content %}
+
+<div class="grid-container grid-padding-x">
+    <h2>Список объявлений</h2>
+    {% if permissions.appendAdvert %}
+    <a href="/adverts/new" class="button">Добавить объявление</a>
+    {% endif %}
+    <form method="GET">
+        <div class="grid-x grid-padding-x">
+            <div class="medium-4 cell">
+                <label>Поиск по ФИО специалиста
+                    <input type="text" name="initials" value="{{ model.specialistNameValue }}">
+                </label>
+            </div>
+            <div class="medium-4 cell">
+                <label>Поиск по названию услуги
+                    <select name="service_name">
+                        <option disabled>Услуга</option>
+                        {% for service in model.servicesList %}
+                        <option value="{{service.serviceName}}"
+                                {%if (model.serviceNameValue == service.serviceName) %}selected{% endif %}>{{ service.serviceName }}</option>
+                        {% endfor %}
+                    </select>
+                </label>
+            </div>
+            <div class="medium-4 cell">
+                <label>Поиск по городу
+                    <select name="city_name">
+                        <option disabled>Город</option>
+                        {% for city in model.citiesList %}
+                        <option value="{{ city.cityName }}"
+                                {%if (model.cityNameValue == city.cityName) %}selected{% endif %}>{{ city.cityName }}</option>
+                        {% endfor %}
+                    </select>
+                </label>
+            </div>
+        </div>
+        <input type="submit" value="Поиск" class="button"/>
+    </form>
+    {{ Paginator(model.paginator) }}
+    {% if model.hasData %}
+    <div class="grid-x grid-padding-x">
+        {% for advert in model.advertsList %}
+            <div class="cell medium-4">
+                <div class="primary callout">
+                    <p>Название объявления:<br> <b>{{ advert.advertName }}</b></p>
+                    <p>Категория услуги:<br> {{ advert.serviceName }}</p>
+                    <p>Имя специалиста:<br> {{ advert.specialistInitials }}</p>
+                    {% if permissions.applicationsList %}
+                        <a class="button" href="/specialists/{{ advert.specialistId }}">Перейти к специалисту</a>
+                    {% endif %}
+                    {% if permissions.advertPage %}
+                            <a href="/adverts/{{advert.advertId }}" class="button">Перейти к объявлению</a>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <h1>Нет данных</h1>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,55 @@
+{% extends "./layout.peb" %}
+{% import "./Paginator.peb" %}
+
+{% block title %}
+Список услуг
+{% endblock %}
+    {% block  content %}
+    <div class="grid-container grid-padding-x">
+        <h2>Список услуг с объявлениями</h2>
+        <form method="GET">
+            <div class="grid-x grid-padding-x">
+                <div class="medium-6 cell">
+                    <label>Поиск по названию услуги
+                        <select name="service_name">
+                            <option disabled>Услуга</option>
+                            {% for service in model.listOfServices %}
+                            <option value="{{service.serviceName}}"
+                                    {%if (model.serviceNameValue == service.serviceName) %}selected{% endif %}>{{ service.serviceName }}</option>
+                            {% endfor %}
+                        </select>
+                    </label>
+                </div>
+                <div class="medium-6 cell">
+                    <label>Поиск по городу
+                        <select name="city_name">
+                            <option disabled>Город</option>
+                            {% for city in model.citiesList %}
+                            <option value="{{ city.cityName }}"
+                                    {%if (model.cityNameValue == city.cityName) %}selected{% endif %}>{{ city.cityName }}</option>
+                            {% endfor %}
+                        </select>
+                    </label>
+                </div>
+            </div>
+            <input type="submit" value="Поиск" class="button"/>
+        </form>
+        <h3>Количество услуг c объявлениями: {{ model.amountOfServices }}</h3>
+        {{ Paginator(model.paginator) }}
+        {% if model.hasData %}
+        <div class="grid-x grid-padding-x">
+            {% for service in model.servicesList %}
+                <div class="cell medium-4">
+                    <div class="primary callout">
+                        <p>Услуга:<br> <b>{{ service.serviceName }}</b></p>
+                        <p>Количество объявлений для услуги: {{ model.fetchAmountOfAdverts(service.serviceName) }}</p>
+                        <p>Дата создания услуги:<br> {{ service.locale }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <h1>Нет данных</h1>
+        {% endif %}
+    </div>
+{% endblock %}

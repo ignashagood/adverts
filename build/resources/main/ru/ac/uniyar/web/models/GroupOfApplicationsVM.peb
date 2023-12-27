@@ -1,0 +1,58 @@
+{% extends "./layout.peb" %}
+{% import "./Paginator.peb" %}
+
+{% block title %}
+Список заявок
+{% endblock %}
+{% block content %}
+<div class="grid-container grid-padding-x">
+    <h2>Список заявок</h2>
+    <a href="/applications/new" class="button">Добавить заявку</a>
+    <form method="GET">
+        <div class="grid-x grid-padding-x">
+            <div class="medium-4 cell">
+                <label>Поиск по названию услуги
+                    <select name="service_name">
+                        <option disabled>Услуга</option>
+                        {% for service in model.servicesList %}
+                        <option value="{{service.serviceName}}"
+                                {%if (model.serviceNameValue == service.serviceName) %}selected{% endif %}>{{ service.serviceName }}</option>
+                        {% endfor %}
+                    </select>
+                </label>
+            </div>
+             <div class="medium-4 cell">
+                <label>Поиск статусу
+                    <select name="status">
+                        <option disabled>Статус</option>
+                        <option value="Новая"
+                         {%if (model.status == "Новая") %}selected{% endif %}>Новая</option>
+                        <option value="Подтверждена"
+                        {%if (model.status == "Подтверждена") %}selected{% endif %}>Подтверждена</option>
+                        <option value="Отклонена"
+                        {%if (model.status == "Отклонена") %}selected{% endif %}>Отклонена</option>
+                    </select>
+                </label>
+            </div>
+        </div>
+        <input type="submit" value="Поиск" class="button"/>
+    </form>
+    {{ Paginator(model.paginator) }}
+    {% if model.hasData %}
+    <div class="grid-x grid-padding-x">
+        {% for application in model.applicationsList %}
+            <div class="cell medium-4">
+                <div class="primary callout">
+                    <p>Категория услуги:<br> <b>{{ model.fetchServiceOperation.fetch(application.serviceID).serviceName }}</b></p>
+                    <p>Имя специалиста:<br> {{ model.fetchSpecialistOperation.fetch(application.specialistID).initials }}</p>
+                    <p>Статус заявки: {{ application.status }}</p>
+                    <a class="button" href="/applications/{{ application.id }}">Перейти к заявке</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <h1>Нет данных</h1>
+    {% endif %}
+</div>
+{% endblock %}

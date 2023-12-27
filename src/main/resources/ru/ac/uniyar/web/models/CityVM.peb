@@ -1,0 +1,27 @@
+{% extends "./layout.peb" %}
+{% import "./Paginator.peb" %}
+
+{% block title %}
+    Услуги для города
+{% endblock %}
+{% block  content %}
+<div class="grid-container grid-padding-x">
+    <h2>Услуги для города {{ model.city.cityName }}</h2>
+    {% if model.hasData %}
+        <div class="grid-x grid-padding-x">
+            {% for pair in model.pairsList %}
+            <div class="cell medium-4">
+                <div class="primary callout">
+                    <p>Категория: {{ pair.first.serviceName }}</p>
+                    <p>Количество объявлений: {{ pair.second }}</p>
+                    <a href="/adverts?service_name={{pair.first.serviceName}}&city_name={{model.city.cityName}}">Перейти к списку объявлений</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <h3>Нет услуг</h3>
+        <a href="/cities" class="button">Вернуться к списку городов</a>
+    {% endif %}
+</div>
+{% endblock %}

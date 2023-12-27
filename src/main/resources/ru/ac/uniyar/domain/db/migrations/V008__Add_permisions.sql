@@ -1,0 +1,5 @@
+INSERT INTO ROLE
+VALUES
+    (1, 'Пользователь', TRUE, TRUE, TRUE, TRUE, TRUE, FALSE, FALSE, FALSE),
+    (2, 'Администратор', FALSE, FALSE, FALSE, TRUE, TRUE, TRUE, FALSE, FALSE),
+    (3, 'Специалист', TRUE, TRUE, TRUE, TRUE, TRUE, FALSE,TRUE, TRUE);

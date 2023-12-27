@@ -1,0 +1,28 @@
+{% extends "./layout.peb" %}
+{% block title %}
+Страничка специалиста
+{% endblock %}
+{% block  content%}
+<div class="grid-container grid-padding-x">
+    <br><div class="callout large text-center ">
+        <h3>Информация о специалисте:<br> <b>{{ currentUser.initials }}</b></h3>
+            <div class="cell"><b>Дата создания:</b> <br>{{ currentUser.locale }}</div>
+            <div><b>Образование: </b><br>{{ currentUser.education }}</div>
+            <div><b>Номер телефона: </b><br>{{ currentUser.phoneNumber }}</div>
+            <form method="POST">
+                <label>Выберите город
+                    <select name="city_name">
+                        <option disabled>Город</option>
+                        {% for city in model.citiesList %}
+                        <option value="{{ city.cityName }}"
+                                {%if (model.cityName == city.cityName) %}selected{% endif %}>{{ city.cityName }}</option>
+                        {% endfor %}
+                    </select>
+                </label>
+                <input class="button" type="submit" value="Сохранить">
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

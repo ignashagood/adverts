@@ -1,0 +1,92 @@
+<!doctype html>
+<html class="no-js" lang="ru" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Нет заголовка{% endblock %}</title>
+    <link rel="stylesheet" href="/css/foundation.css">
+    <link rel="stylesheet" href="/css/app.css">
+  </head>
+<body>
+<div class="grid-container">
+
+{% block header %}
+        <div class="top-bar">
+            <div class="top-bar-left">
+                <ul class="dropdown menu">
+                    <li class="menu-text">Навигация по сайту</li>
+                    <li><a href="/">Стартовая страница</a></li>
+                    <ul class="dropdown menu" data-dropdown-menu>
+                        <li>
+                            <a href="#">Списки</a>
+                            <ul class="menu">
+                                <li><a href="/services">Список услуг</a></li>
+                                <li><a href="/adverts">Список объявлений</a></li>
+                                <li><a href="/cities">Список городов</a></li>
+                                {% if permissions.applicationsList %}
+                                    <li><a href="/applications">Список заявок</a></li>
+                                {% endif %}
+                                {% if permissions.agreement %}
+                                    <li><a href="/specialists">Список специалистов</a></li>
+                                {% endif %}
+                            </ul>
+                        </li>
+                    </ul>
+                    {% if permissions.sendingApplication %}
+                        <li><a href="/applications/new">Подать заявку</a></li>
+                    {% endif %}
+                    {% if permissions.appendAdvert %}
+                        <li><a href="/adverts/new">Создать объявление</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+            <div class="top-bar-right">
+            <ul class="dropdown menu" data-dropdown-menu>
+                {% if currentUser is not null %}
+                <li>
+                    <a>{{ currentUser.initials }}</a>
+                    <ul class="menu">
+                    {% if permissions.changingCity %}
+                        <li><a href="/specialists/{{ currentUser.specialistId }}">Перейти на личную страницу</a></li>
+                    {% endif %}
+                        <li><a href="/logout">Выйти</a></li>
+                    </ul>
+                </li>
+{#                    <li>{{ currentUser.initials }}</li>#}
+{#                    <li><img src="/img/dropdown-icon.svg" width="20px" height="20px"></li>#}
+
+{#                <div class="dropdown-pane" id="example-dropdown-1" data-dropdown data-hover="true" data-hover-pane="true">#}
+{#                    <div><a href="/logout">Выйти</a></div>#}
+{#                </div>#}
+                {% else %}
+                    <li><a href="/login">Войти</a></li>
+                {% endif %}
+            </ul>
+{#                <ul class="dropdown menu" data-dropdown-menu>#}
+{#                    {% if currentUser is not null %}#}
+{#                        <li><h5>{{ currentUser.initials }}</h5></li>#}
+{#                        <li>#}
+{#                            <a></a>#}
+{#                            <ul class="menu vertical">#}
+{#                                <li><a href="/logout">Выйти</a></li>#}
+{#                            </ul>#}
+{#                        </li>#}
+{#                    {% else %}#}
+{#                        <li><a href="/login">Войти</a></li>#}
+{#                    {% endif %}#}
+{#                </ul>#}
+            </div>
+        </div>
+{% endblock %}
+{% block content %}
+{% endblock %}
+
+</div>
+
+    <script src="/js/vendor/jquery.js"></script>
+    <script src="/js/vendor/what-input.js"></script>
+    <script src="/js/vendor/foundation.js"></script>
+    <script src="/js/app.js"></script>
+  </body>
+</html>

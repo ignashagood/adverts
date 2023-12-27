@@ -1,0 +1,29 @@
+{% extends "./layout.peb" %}
+{% block title %}
+    Добавление специалиста
+{% endblock %}
+{% block  content%}
+<div class="grid-container">
+        <h1 class="text-center">Создание Специалиста</h1>
+        {% if model.webForm.errors is not empty %}
+            {% for error in model.webForm.errors %}
+                <div class = "alert callout">
+                   {{ error }}
+                </div>
+            {% endfor %}
+        {% endif %}
+        <form method="POST">
+             <label>Введите Фамилию Имя Отчество
+                <input type="text" maxlength=50 name="initials" value="{{ model.initials }}">
+             </label>
+             <label>Введите Номер телефона
+                <input type="text" maxlength=20 name="phoneNumber" value="{{ model.phoneNumber }}">
+             </label>
+             <label>Введите образование, сертификацию
+                <textarea type="text" maxlength=100 rows=2 name="education">{{ model.education }}</textarea>
+             </label>
+             <input class="button" type="submit" value="Создать">
+        </form>
+    </div>
+</div>
+{% endblock %}

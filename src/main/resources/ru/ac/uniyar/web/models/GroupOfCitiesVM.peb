@@ -1,0 +1,42 @@
+{% extends "./layout.peb" %}
+{% import "./Paginator.peb" %}
+
+{% block title %}
+    Список городов
+{% endblock %}
+{% block  content %}
+    <div class="grid-container grid-padding-x">
+        <h2>Список городов</h2>
+        <form method="GET">
+            <div class="grid-x grid-padding-x">
+                <div class="medium-6 cell">
+                    <label>Поиск по городу
+                        <select name="city_name">
+                            <option disabled>Город</option>
+                            {% for city in model.citiesList %}
+                            <option value="{{ city.cityName }}"
+                                    {%if (model.cityNameValue == city.cityName) %}selected{% endif %}>{{ city.cityName }}</option>
+                            {% endfor %}
+                        </select>
+                    </label>
+                </div>
+            </div>
+            <input type="submit" value="Поиск" class="button"/>
+        </form>
+        {{ Paginator(model.paginator) }}
+        {% if model.hasData %}
+            <div class="grid-x grid-padding-x">
+                {% for city in model.citiesList %}
+                    <div class="cell medium-4">
+                        <div class="primary callout">
+                            <p>Город: {{ city.cityName }}</p>
+                            <a href="/cities/{{city.cityId}}">Перейти на страницу города</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <h1>Нет данных</h1>
+        {% endif %}
+    </div>
+{% endblock %}

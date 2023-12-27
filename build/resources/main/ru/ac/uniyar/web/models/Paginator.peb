@@ -1,0 +1,16 @@
+{% macro Paginator(paginator) %}
+        <nav aria-label="Pagination">
+            <ul class="pagination text-center">
+                {% if paginator.hasPrevPage() %}
+                    <li class="pagination-previous"><a href="{{ paginator.prevPageLink }}">Перейти на предыдущую страницу</a></li>
+                {% else %}
+                <li class="pagination-previous disabled">Нельзя перейти на предыдущую страницу</li>
+                {% endif %}
+                {% if paginator.hasNextPage() %}
+                    <li class="pagination-next"><a href="{{ paginator.nextPageLink }}">Перейти на следующую страницу</a></li>
+                {% else %}
+                    <li class="pagination-next disabled">Нельзя перейти на следующую страницу</li>
+                {% endif %}
+            </ul>
+        </nav>
+{% endmacro %}

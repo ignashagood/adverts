@@ -1,0 +1,43 @@
+{% extends "./layout.peb" %}
+
+{% block title %}
+Авторизация
+{% endblock %}
+
+{% block content %}
+
+<div class="grid-container grid-padding-x">
+    <h2 class="text-center">Авторизация</h2>
+        {% if model.form.errors is not empty %}
+            {% for error in model.form.errors %}
+                <div class = "alert callout">
+                    {% if error.meta.description is not null %}
+                        {{ error.meta.description }}
+                    {% else %}
+                        {{ error }}
+                    {% endif %}
+                </div>
+            {% endfor %}
+        {% endif %}
+    <form method="POST">
+        <div class="grid-x grid-padding-x">
+            <div class="cell medium-6">
+                <label>Имя пользователя
+                    <input type="text" maxlength="50" name="userName"
+                        value="{{ model.userName }}"
+                >
+                </label>
+            </div>
+            <div class="cell medium-6">
+                <label>Пароль
+                    <input type="password" maxlength="64" name="userPassword"
+                           value="{{ model.userPassword }}"
+                    >
+                </label>
+            </div>
+        </div>
+        <input type="submit" class="button" value="Войти">
+        <a href="/registration" class="button">Регистрация</a>
+    </form>
+</div>
+{% endblock %}

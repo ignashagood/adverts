@@ -1,0 +1,10 @@
+{% extends "./layout.peb" %}
+{% block title %}
+ Страница не найдена
+{% endblock %}
+{% block content %}
+    <div class="grid-container">
+    <h2>Документ {{ model.uri }} не найден</h2>
+    <div><a href="/" class="button">Вернуться на главную</a></div>
+    </div>
+{% endblock %}

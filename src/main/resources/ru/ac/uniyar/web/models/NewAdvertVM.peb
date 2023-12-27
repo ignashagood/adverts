@@ -1,0 +1,41 @@
+{% extends "./layout.peb" %}
+{% block title %}
+    Добавление объявления
+{% endblock %}
+{% block content%}
+<div class="grid-container">
+        <h1 class="text-center">Объявление</h1>
+        {% if model.webForm.errors is not empty %}
+            {% for error in model.webForm.errors %}
+                <div class = "alert callout">
+                   {{ error }}
+                </div>
+            {% endfor %}
+        {% endif %}
+        <form method="POST">
+             <label>Введите название объявления
+                <input type="text" maxlength=50 name="advert_name" value="{{ model.advertName }}">
+             </label>
+             <label>Введите описание
+                <textarea type="text" maxlength=100 rows=2 name="description">{{ model.advertDescription }}</textarea>
+             </label>
+             <label>Инициалы специалиста
+                 <input type="text" maxlength=50 name="specialistInitials" value="{{ currentUser.initials }}" readonly>
+             </label>
+             <label>Выберите услугу
+                <select name="service_name">
+                    <option disabled>Название услуги</option>
+                    {% for service in model.servicesList %}
+                    <option value="{{service.serviceName}}"
+                            {%if (model.serviceName == service.serviceName) %}selected{% endif %}>{{ service.serviceName }}</option>
+                    {% endfor %}
+                </select>
+             </label>
+             <label>Город
+               <input type="text" maxlength=50 name="city" value="{{ model.userCity }}" readonly>
+             </label>
+             <input class="button" type="submit" value="Сохранить">
+        </form>
+    </div>
+</div>
+{% endblock %}
